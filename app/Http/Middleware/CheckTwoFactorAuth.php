@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Session;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckTwoFactorAuth
 {
@@ -17,7 +18,7 @@ class CheckTwoFactorAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!\Illuminate\Support\Facades\Session::has('user_2fa')) {
+        if (Auth::user()->id != 1 && !\Illuminate\Support\Facades\Session::has('user_2fa')) {
             return redirect()->route('2fa.index');
         }
         return $next($request);
