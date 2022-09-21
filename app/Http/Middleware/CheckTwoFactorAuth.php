@@ -18,7 +18,7 @@ class CheckTwoFactorAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->id != 1 && !\Illuminate\Support\Facades\Session::has('user_2fa')) {
+        if (Auth::check() && Auth::user()->id != 1 && !\Illuminate\Support\Facades\Session::has('user_2fa')) {
             return redirect()->route('2fa.index');
         }
         return $next($request);
